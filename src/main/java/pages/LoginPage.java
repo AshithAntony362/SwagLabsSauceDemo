@@ -64,6 +64,14 @@ WebDriver driver;
 	By loginButton = By.xpath("//input[@id='login-button']");             
 	
 	
+	/*
+	 * LOCATOR 4:
+	 *
+	 * Login Error Message
+	 */
+	
+	By loginErrorMessage =
+	        By.cssSelector("h3[data-test='error']");
 	
 	
 	/*
@@ -111,6 +119,16 @@ WebDriver driver;
 		enterUsername(user_name);                                      //as all are non static methods, we can call directly
 		enterPassword(pass_word);
 		clickLogin();
+		
+	}
+	
+	//Method: get Login error message
+	
+	public String getLoginErrorMessage() {
+
+	    return driver.findElement(loginErrorMessage)
+	                 .getText();
+
 	}
 
 

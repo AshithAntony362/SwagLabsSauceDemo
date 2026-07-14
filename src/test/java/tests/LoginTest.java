@@ -1,32 +1,38 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.BaseSwagLabs;
 import pages.LoginPage;
 import utils.ExcelUtils;
-	
-                                                       // Run All
+
 public class LoginTest extends BaseSwagLabs {
-LoginPage loginPage;
 
-@Test
-                                                    // Run | Debug
+    LoginPage loginPage;
 
-public void loginTest() throws Exception {
+    @Test
+    public void loginTest() throws Exception {
 
-loginPage = new LoginPage(driver);
+        // Create Login Page Object
+        loginPage = new LoginPage(driver);
 
-  // Read data from Excel
-String username = ExcelUtils.getCellData(1, 0);
-String password = ExcelUtils.getCellData(1, 1);
+        // Read Username and Password from Excel
+        String username = ExcelUtils.getCellData(1, 0);
+        String password = ExcelUtils.getCellData(1, 1);
 
-  // Use POM
-loginPage.login(username, password);
+        System.out.println("Username : " + username);
+        System.out.println("Password : " + password);
 
-//write result
+        // Perform Login using POM
+        loginPage.login(username, password);
 
-ExcelUtils.setCellData(7,1, "Login Attempted");
-}
+        // Verify successful login
+        Assert.assertTrue(
+                driver.getCurrentUrl().contains("inventory"),
+                "Login Failed"
+        );
 
+        System.out.println("Login Successful");
+    }
 }
