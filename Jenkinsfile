@@ -1,15 +1,15 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Valid-InvalidLogin') {
-            steps {
-                checkout scm
-            }
-        }
+    tools {
+        jdk 'JDK'
+    }
 
+    stages {
         stage('Run Regression Tests') {
             steps {
+                bat 'java -version'
+                bat 'mvn -version'
                 bat 'mvn clean test -DsuiteXmlFile=regression-testng.xml'
             }
         }
@@ -17,7 +17,8 @@ pipeline {
 
     post {
         always {
-            junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+            junit allowEmptyResults: true,
+                  testResults: 'target/surefire-reports/*.xml'
         }
     }
 }
